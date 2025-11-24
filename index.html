@@ -1,0 +1,196 @@
+!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Formulário Concorrer</title>
+
+    <style>
+        body {
+            font-family: Unispace, sans-serif;
+            font-size: 16px;
+            margin: 150px;
+            background-color: #ffffff;
+            background-image: url("https://s2-autoesporte.glbimg.com/FpJ687t38uKhHjt0PAr1KmKuWfU=/0x0:1099x700/888x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_cf9d035bf26b4646b105bd958f32089d/internal_photos/bs/2024/J/h/gQjz2RSYaYfJfbxVVtvQ/ruyter-affair-jade-picon.jpg");
+            background-size: cover;
+            background-position: center;
+        }
+
+        form {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 550px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            border: none;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #1d2ec9;
+        }
+
+        h1 {
+            font-family: Impact, sans-serif;
+            font-size: 70px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #ffdd00;
+            text-shadow: 2px 2px 0px #000, 4px 4px 0px #ff0000, 6px 6px 0px #cc0000, 8px 8px 0px #990000;
+            background: linear-gradient(90deg, #fff200, #ff9d00, #ff0000, #fff200);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: degrade 3s linear infinite, vibra 1.2s ease-in-out infinite;
+        }
+
+        @keyframes degrade {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes vibra {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>PREENCHA PARA CONCORRER</h1>
+
+    <form id="formConcorrer">
+        <label for="nome">Nome completo:</label>
+        <input type="text" id="nome" name="nome" required placeholder="Ex: João da Silva"
+            pattern="[A-Za-zÀ-ÿ\s]+" title="Digite apenas letras e espaços.">
+
+        <label for="cpf">CPF:</label>
+        <input type="text" id="cpf" name="cpf" required maxlength="14" placeholder="000.000.000-00"
+            pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Formato correto: 000.000.000-00">
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required placeholder="Ex: nome.123@gmail.com">
+
+        <label for="telefone">Telefone:</label>
+        <input type="text" id="telefone" name="telefone" required maxlength="15" placeholder="(00) 00000-0000"
+            pattern="\(\d{2}\) \d{4,5}-\d{4}" title="Formato correto: (99) 99999-9999">
+
+        <label for="endereco">Endereço:</label>
+        <input type="text" id="endereco" name="endereco" required placeholder="Ex: Rua 47">
+
+        <button type="button" id="concorrerBtn">Concorrer</button>
+    </form>
+
+    <script>
+        // Permite apenas letras e espaços no Nome
+        document.getElementById("nome").addEventListener("input", function () {
+            this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, "");
+        });
+
+        // Máscara CPF
+        document.getElementById("cpf").addEventListener("input", function () {
+            let v = this.value.replace(/\D/g, "");
+            if (v.length > 3) v = v.replace(/(\d{3})(\d)/, "$1.$2");
+            if (v.length > 6) v = v.replace(/(\d{3})(\d)/, "$1.$2");
+            if (v.length > 9) v = v.replace(/(\d{3})(\d{2})$/, "$1-$2");
+            this.value = v;
+        });
+
+        // Máscara Telefone
+        document.getElementById("telefone").addEventListener("input", function () {
+            let v = this.value.replace(/\D/g, "");
+            if (v.length <= 10) {
+                v = v.replace(/^(\d{2})(\d)/, "($1) $2");
+                v = v.replace(/(\d{4})(\d)/, "$1-$2");
+            } else {
+                v = v.replace(/^(\d{2})(\d)/, "($1) $2");
+                v = v.replace(/(\d{5})(\d)/, "$1-$2");
+            }
+            this.value = v;
+        });
+
+        // Evento ao clicar no botão Concorrer
+        document.getElementById("concorrerBtn").addEventListener("click", function () {
+            // Criando o conteúdo da página de aviso
+            let avisoPage = `
+                <!DOCTYPE html>
+                <html lang="pt-BR">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>🚨 AVISO! Você caiu em um golpe!</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            background-color: #fcebeb; /* Fundo vermelho claro */
+                            color: #cc0000; /* Texto vermelho escuro */
+                            text-align: center;
+                            padding: 50px;
+                        }
+                        .container {
+                            background-color: white;
+                            padding: 30px;
+                            border: 5px solid #cc0000;
+                            border-radius: 10px;
+                            display: inline-block;
+                        }
+                        h1 {
+                            color: #cc0000;
+                            font-size: 2em;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <h1>🚨 AVISO DE SIMULAÇÃO DE ROUBO DE DADOS 🚨</h1>
+                        <p>Este é apenas um exercício de código, mas <strong>você caiu na armadilha</strong>!</p>
+                        <p>Seus dados teriam sido enviados para um servidor mal-intencionado.</p>
+                        <hr>
+                        <h2>Lembre-se: DEIXE DE SER BUTECO E QUERER AS COISAS FÁCEIS, É TRABALHANDO QUE SE CONSEGUE AS COISAS, NÃO APOSTANDO NA SORTE!</h2>
+                        <ul>
+                            <li><strong>Desconfie</strong> de ofertas inacreditáveis (75% off é um grande sinal de alerta).</li>
+                            <li><strong>Verifique</strong> a URL do site na barra de endereços.</li>
+                            <li><strong>Nunca</strong> insira dados pessoais em sites suspeitos.</li>
+                        </ul>
+                        <p style="margin-top: 20px;">Você pode voltar e tentar novamente.</p>
+                    </div>
+                </body>
+                </html>
+            `;
+
+            // Abrir a página de aviso em uma nova aba
+            let newWindow = window.open('', '_blank');
+            newWindow.document.write(avisoPage);
+            newWindow.document.close(); // Fechar o documento da nova janela para que seja renderizado
+        });
+    </script>
+
+</body>
+</html>
